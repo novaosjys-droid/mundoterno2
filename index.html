@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundo Eterno | Regalos & Anchetas</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --cream: #faf8f5;
+      --warm: #f4f0ea;
+      --border: rgba(120, 100, 80, 0.12);
+      --text: #1c1a17;
+      --muted: #7a7268;
+      --accent: #8b6f4e;
+      --accent-light: #c9a97a;
+      --wa-green: #25D366;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Jost", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display {
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    .no-scroll {
+      overflow: hidden;
+    }
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--cream);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    #loading-screen.oculto {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
+
+    .loader-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 16px auto 0;
+      animation: expandLine 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes expandLine {
+      from {
+        width: 20px;
+        opacity: 0.4;
+      }
+      to {
+        width: 60px;
+        opacity: 1;
+      }
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-logo-text {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.25rem, 4vw, 1.6rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .nav-sub {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 300;
+    }
+
+    .nav-logo-img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 75vh;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 767px) {
+      header {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-img-wrap {
+        height: 55vw;
+        min-height: 220px;
+        max-height: 360px;
+        order: -1;
+      }
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(32px, 6vw, 80px) clamp(24px, 5vw, 64px);
+      background: #fff;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 380px;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      margin-top: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--text);
+      color: #fff;
+      padding: 14px 28px;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent);
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: #e8e2d9;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+
+    .carousel-arrows {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+    }
+
+    .carousel-arrows button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      font-size: 11px;
+    }
+
+    .carousel-arrows button:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .trust-strip {
+      background: var(--warm);
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .trust-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(20px, 4vw, 60px);
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .trust-item i {
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    .filters-section {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 73px;
+      z-index: 40;
+      background: rgba(250, 248, 245, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .filters-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+
+    .filters-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      margin-right: 8px;
+      font-family: "Jost", sans-serif;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.activo {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 16px 80px;
+    }
+
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .productos-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .producto {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.25s, transform 0.25s;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .producto:hover {
+      box-shadow: 0 8px 28px rgba(100, 80, 60, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .producto.oculto {
+      display: none;
+    }
+
+    .producto-img-wrap {
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: var(--warm);
+    }
+
+    .producto-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      display: block;
+    }
+
+    .producto:hover .producto-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .producto-info {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .producto-cat {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .producto-nombre {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .producto-precio {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-pedido {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #25D366;
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.2s;
+      margin-top: auto;
+      font-family: "Jost", sans-serif;
+    }
+
+    .btn-pedido:hover {
+      background: #1eae57;
+    }
+
+    .why-section {
+      background: var(--text);
+      color: #fff;
+      padding: clamp(48px, 8vw, 80px) 20px;
+      margin-top: 40px;
+    }
+
+    .why-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .why-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 48px;
+      color: #fff;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+
+    .why-item i {
+      font-size: 22px;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .why-item strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .why-item p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    footer {
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+      padding: clamp(40px, 6vw, 64px) 20px 32px;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 600px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-brand-name {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .footer-brand-sub {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .footer-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 320px;
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .footer-contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .footer-contact a:hover {
+      color: var(--accent);
+    }
+
+    .footer-contact i {
+      color: var(--accent);
+      width: 16px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 15px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    @media (max-width: 600px) {
+      .footer-right {
+        text-align: left;
+      }
+    }
+
+    .footer-hours-title {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .footer-hours p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 300;
+    }
+
+    .footer-bottom {
+      max-width: 960px;
+      margin: 32px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 100;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wa-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+      color: #fff;
+      font-size: 26px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.55);
+    }
+
+    @keyframes waPulse {
+      0%, 100% {
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 24px rgba(37, 211, 102, 0.65), 0 0 0 8px rgba(37, 211, 102, 0.08);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="no-scroll">
+
+  <div id="loading-screen">
+    <div style="text-align:center;">
+      <span class="font-display" style="font-size:2rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text);">Mundo Eterno</span>
+      <span style="display:block;font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-top:6px;font-weight:300;">Anchetas & Detalles de Autor</span>
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <div>
+        <span class="nav-logo-text">Mundo Eterno</span>
+        <p class="nav-sub">Anchetas & Detalles de Autor</p>
+      </div>
+      <img src="img/logo.png" alt="Logo Mundo Eterno" class="nav-logo-img" />
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Boutique Digital · Medellín</span>
+      <h1 class="hero-title font-display">El arte<br />de obsequiar</h1>
+      <p class="hero-desc">Anchetas finas y regalos personalizados para cada fecha especial. Diseños únicos que quedan en la memoria.</p>
+      <a href="#catalogo" class="hero-cta">
+        <i class="fas fa-arrow-down" style="font-size:11px;"></i>
+        Ver catálogo
+      </a>
+    </div>
+
+    <div class="hero-img-wrap">
+      <div class="slide active"><img src="./img/banner1.webp" alt="Mundo Eterno Regalos Exclusivos" loading="eager" /></div>
+      <div class="slide"><img src="./img/banner2.webp" alt="Anchetas de Autor" loading="lazy" /></div>
+      <div class="slide"><img src="./img/banner3.webp" alt="Detalles Minimalistas" loading="lazy" /></div>
+
+      <div class="carousel-dots">
+        <button class="carousel-dot active" type="button" data-slide="0" aria-label="Slide 1"></button>
+        <button class="carousel-dot" type="button" data-slide="1" aria-label="Slide 2"></button>
+        <button class="carousel-dot" type="button" data-slide="2" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-arrows">
+        <button type="button" id="prevSlide" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <button type="button" id="nextSlide" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item"><i class="fas fa-map-marker-alt"></i><span>Domicilio en Medellín</span></div>
+      <div class="trust-item"><i class="fas fa-clock"></i><span>Pedidos con 24h de anticipación</span></div>
+      <div class="trust-item"><i class="fas fa-paint-brush"></i><span>100% personalizados</span></div>
+      <div class="trust-item"><i class="fab fa-whatsapp"></i><span>Atención por WhatsApp</span></div>
+    </div>
+  </div>
+
+  <section class="filters-section" id="catalogo" aria-label="Filtrar por categoría">
+    <div class="filters-wrap">
+      <button type="button" class="filter-btn activo" data-filter="todos" aria-pressed="true">Todos</button>
+      <button type="button" class="filter-btn" data-filter="cumpleanos" aria-pressed="false">Cumpleaños</button>
+      <button type="button" class="filter-btn" data-filter="graduacion" aria-pressed="false">Graduación</button>
+      <button type="button" class="filter-btn" data-filter="comunion" aria-pressed="false">Primera Comunión</button>
+      <button type="button" class="filter-btn" data-filter="madres" aria-pressed="false">Día de Madres</button>
+      <button type="button" class="filter-btn" data-filter="padres" aria-pressed="false">Día de Padres</button>
+      <button type="button" class="filter-btn" data-filter="amor" aria-pressed="false">Amor y Amistad</button>
+    </div>
+  </section>
+
+  <main>
+    <div class="productos-grid" id="grid-productos">
+      <article class="producto" data-categoria="cumpleanos">
+        <div class="producto-img-wrap">
+          <img src="./img/cumpleaños1.webp" alt="Bandeja de dulces para cumpleaños" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Cumpleaños</span>
+          <h3 class="producto-nombre">Bandeja de dulces</h3>
+          <p class="producto-precio">Desde $45.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Bandeja%20de%20dulces" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="graduacion">
+        <div class="producto-img-wrap">
+          <img src="./img/graduacion1.webp" alt="Ramo de graduación elegante" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Graduación</span>
+          <h3 class="producto-nombre">Ramo elegancia académica</h3>
+          <p class="producto-precio">Desde $45.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Ramo%20elegancia%20académica" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="comunion">
+        <div class="producto-img-wrap">
+          <img src="./img/comunion1.webp" alt="Ramo blanco primera comunión" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Primera Comunión</span>
+          <h3 class="producto-nombre">Ramo blanco y perlas</h3>
+          <p class="producto-precio">Desde $45.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Ramo%20blanco%20y%20perlas" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="madres">
+        <div class="producto-img-wrap">
+          <img src="./img/madre1.webp" alt="Ramo día de la madre" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Día de Madres</span>
+          <h3 class="producto-nombre">Ramo de la reina del hogar</h3>
+          <p class="producto-precio">Desde $50.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Ramo%20de%20la%20reina%20del%20hogar" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="padres">
+        <div class="producto-img-wrap">
+          <img src="./img/padre1.webp" alt="Caja chocolates día del padre" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Día de Padres</span>
+          <h3 class="producto-nombre">Caja de chocolates premium</h3>
+          <p class="producto-precio">Desde $50.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Caja%20de%20chocolates%20premium" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="amor">
+        <div class="producto-img-wrap">
+          <img src="./img/amor1.webp" alt="Ancheta personalizada amor y amistad" loading="lazy" />
+        </div>
+        <div class="producto-info">
+          <span class="producto-cat">Amor y Amistad</span>
+          <h3 class="producto-nombre">Ancheta personalizada</h3>
+          <p class="producto-precio">Desde $55.000 · Personalizable</p>
+          <a href="https://wa.me/573105005918?text=Hola,%20deseo%20solicitar%20información%20sobre:%20Ancheta%20personalizada" target="_blank" rel="noopener noreferrer" class="btn-pedido">
+            <i class="fab fa-whatsapp"></i>Solicitar pedido
+          </a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <section class="why-section" aria-labelledby="why-title">
+    <div class="why-inner">
+      <h2 class="why-title font-display" id="why-title">¿Por qué elegir Mundo Eterno?</h2>
+      <div class="why-grid">
+        <div class="why-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <strong>Domicilio en Medellín</strong>
+          <p>Entregamos tu detalle con cuidado directamente donde lo necesitas.</p>
+        </div>
+        <div class="why-item">
+          <i class="fas fa-clock"></i>
+          <strong>Pedidos desde 24h antes</strong>
+          <p>Agenda con anticipación y nosotros nos encargamos del resto.</p>
+        </div>
+        <div class="why-item">
+          <i class="fas fa-paint-brush"></i>
+          <strong>100% personalizados</strong>
+          <p>Cada detalle se diseña especialmente para la persona que lo recibirá.</p>
+        </div>
+        <div class="why-item">
+          <i class="fas fa-heart"></i>
+          <strong>Hechos con amor</strong>
+          <p>Detalles artesanales que convierten un momento en un recuerdo eterno.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <span class="footer-brand-name">Mundo Eterno</span>
+        <span class="footer-brand-sub">Anchetas & Detalles de Autor</span>
+        <p class="footer-desc">Regalos únicos para las fechas que más importan. Cada detalle diseñado para perdurar en la memoria.</p>
+
+        <div class="footer-contact">
+          <a href="https://wa.me/573105005918" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i> +57 310 500 5918
+          </a>
+          <br />
+          <a href="https://www.instagram.com/mundoeterno_regalos" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> @mundoeterno_regalos
+          </a>
+        </div>
+
+        <div class="footer-social">
+          <a href="https://wa.me/573105005918" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/mundoeterno_regalos" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/mundoeterno_regalos" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <p class="footer-hours-title">Horario de atención</p>
+        <p>Lunes a Viernes: 8am – 7pm</p>
+        <p>Sábados: 9am – 5pm</p>
+        <p>Domingos: Fechas especiales</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Mundo Eterno · Medellín, Colombia</span>
+      <span>Todos los precios son orientativos. Consultar disponibilidad.</span>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/573105005918?text=Hola,%20vi%20el%20catálogo%20de%20Mundo%20Eterno%20y%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-screen").classList.add("oculto");
+        document.body.classList.remove("no-scroll");
+      }, 600);
+    });
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".carousel-dot");
+
+    function goSlide(index) {
+      slides[currentSlide].classList.remove("active");
+      dots[currentSlide].classList.remove("active");
+
+      currentSlide = (index + slides.length) % slides.length;
+
+      slides[currentSlide].classList.add("active");
+      dots[currentSlide].classList.add("active");
+    }
+
+    function cambiarSlide(dir) {
+      goSlide(currentSlide + dir);
+    }
+
+    document.getElementById("prevSlide").addEventListener("click", () => cambiarSlide(-1));
+    document.getElementById("nextSlide").addEventListener("click", () => cambiarSlide(1));
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        goSlide(Number(dot.dataset.slide));
+      });
+    });
+
+    setInterval(() => cambiarSlide(1), 5000);
+
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const productos = document.querySelectorAll(".producto");
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const categoria = button.dataset.filter;
+
+        filterButtons.forEach((btn) => {
+          btn.classList.remove("activo");
+          btn.setAttribute("aria-pressed", "false");
+        });
+
+        button.classList.add("activo");
+        button.setAttribute("aria-pressed", "true");
+
+        productos.forEach((producto) => {
+          const visible = categoria === "todos" || producto.dataset.categoria === categoria;
+          producto.classList.toggle("oculto", !visible);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
